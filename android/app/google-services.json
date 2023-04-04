@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "671738204587",
+    "project_id": "udelivery-71481",
+    "storage_bucket": "udelivery-71481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671738204587:android:11898b54d0266f6efa42ee",
+        "android_client_info": {
+          "package_name": "com.example.udelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671738204587-0frp1kpjru37cmpg8th7bqjlonkvv1gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5HkJ44VEYBKGv3laJ4bVqJS4y-cAXfB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671738204587-0frp1kpjru37cmpg8th7bqjlonkvv1gr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "671738204587-54n164haod6j98rtgnliotf9nve0rh5u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.udelivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
