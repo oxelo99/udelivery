@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:udelivery/login_page.dart';
-import 'Home.dart';
+import 'package:udelivery/main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -10,8 +9,5 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(LoginPage());
+  runApp(const MainPage());
 }
-
-
-

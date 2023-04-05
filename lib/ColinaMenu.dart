@@ -9,13 +9,8 @@ class ColinaMenu extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Meniu Colina'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
+      body: const Center(
+
       ),
     );
     //return const ColinaMenu();
