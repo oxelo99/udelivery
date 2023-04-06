@@ -1,23 +1,35 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginPage extends StatefulWidget {
-  final VoidCallback showRegisterPage;
+class RegisterPage extends StatefulWidget {
+  final VoidCallback showLoginPage;
 
-  const LoginPage({Key? key, required this.showRegisterPage}) : super(key: key);
+  RegisterPage({Key? key, required this.showLoginPage}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
+  final _confirmpasswordcontroller = TextEditingController();
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailcontroller.text.trim(),
-        password: _passwordcontroller.text.trim());
+  bool passwordCheck() {
+    if (_passwordcontroller.text.trim() ==
+        _confirmpasswordcontroller.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future signUp() async {
+    if (passwordCheck() == true) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailcontroller.text.trim(),
+          password: _passwordcontroller.text.trim());
+    }
   }
 
   @override
@@ -36,19 +48,15 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                Image.asset('assets/UnitLogo.png'),
-                const SizedBox(
-                  height: 25,
-                ),
                 const Text('uDelivery',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
                     )),
                 const SizedBox(
-                  height: 5,
+                  height: 50,
                 ),
-                const Text('Bine ai revenit!',
+                const Text('Completeaza datele de mai jos:',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -89,30 +97,33 @@ class _LoginPageState extends State<LoginPage> {
                       )),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const[
-                      Text(
-                        'Parola uitata?',
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 15,
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.white,
                         ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ],
-                  ),
+                      child: TextField(
+                        controller: _confirmpasswordcontroller,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Confirm Password',
+                        ),
+                      )),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: signIn,
+                    onTap: signUp,
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       decoration: BoxDecoration(
@@ -121,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: const Center(
                           child: Text(
-                        'Log In',
+                        'Register',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -133,9 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 5),
                 GestureDetector(
-                  onTap: widget.showRegisterPage,
-                  child: const Text('Creaza un cont nou',
-                      style: TextStyle(color: Colors.orange)),
+                  onTap: widget.showLoginPage,
+                  child: const Text('Ai deja cont? Conecteaza-te acum',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),

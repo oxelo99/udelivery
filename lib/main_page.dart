@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:udelivery/Home.dart';
 import 'package:udelivery/login_page.dart';
 
+import 'auth_page.dart';
+
 class MainPage extends StatelessWidget{
   const MainPage({super.key});
   @override
@@ -16,7 +18,7 @@ class MainPage extends StatelessWidget{
           if (snapshot.hasData) {
             return MyApp();
           } else {
-            return const LoginPage();
+            return const AuthPage();
           }
         },
     );
