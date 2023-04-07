@@ -1,52 +1,37 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'ColinaMenu.dart';
-import 'main_page.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'colina_menu.dart';
+import 'theme_data.dart';
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final DefineColors primarySW = DefineColors();
+  const MyApp({super.key});
 
   @override
   build(context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-      theme: ThemeData(
-        //primaryColor: Colors.white,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: primarySW.lightPrimaryColor,
-          //accentColor: Colors.pink,
-          backgroundColor: Colors.white,
-          errorColor: Colors.red,
-          brightness: Brightness.light,
-        ),
-        textTheme: GoogleFonts.kanitTextTheme(),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: primarySW.darkPrimaryColor,
-          backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-        ),
-        textTheme: GoogleFonts.kanitTextTheme().apply(
-          bodyColor: Colors.white,
-          displayColor: Colors.white,
-        ),
-      ),
+      home: const HomePage(),
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
     );
   }
 }
 
-class HomePage extends MainPage {
-  HomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
-  Icon logout = const Icon(Icons.logout);
+  final Icon logout = const Icon(Icons.logout);
 
   @override
   build(context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    Color textColor() {
+      if (Theme.of(context).brightness == Brightness.dark) {
+        return Colors.black;
+      } else {
+        return Colors.white;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Delivery'),
@@ -59,7 +44,7 @@ class HomePage extends MainPage {
               icon: logout)
         ],
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      //backgroundColor: MyTheme.lightPrimaryColor.,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -67,7 +52,7 @@ class HomePage extends MainPage {
               margin: const EdgeInsets.fromLTRB(15, 30, 20, 0),
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
               decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -75,7 +60,6 @@ class HomePage extends MainPage {
                       bottomRight: Radius.circular(10)),
                   boxShadow: const [
                     BoxShadow(
-                      //color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: Offset(0, 1), // changes position of shadow
@@ -92,18 +76,16 @@ class HomePage extends MainPage {
                         Container(
                             padding: const EdgeInsets.all(10),
                             alignment: FractionalOffset.centerLeft,
-                            child: const Text('Colina',
+                            child: Text('Colina',
                                 style: TextStyle(
                                   fontSize: 20,
+                                  color: textColor(),
                                 ))),
                         Container(
                           alignment: FractionalOffset.bottomRight,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Theme.of(context).colorScheme.primary
-                                  : const Color.fromARGB(255, 241, 148, 58),
+                              backgroundColor: Theme.of(context).canvasColor,
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -125,7 +107,7 @@ class HomePage extends MainPage {
               margin: const EdgeInsets.fromLTRB(15, 30, 20, 0),
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
               decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
@@ -150,18 +132,16 @@ class HomePage extends MainPage {
                         Container(
                             padding: const EdgeInsets.all(10),
                             alignment: FractionalOffset.centerLeft,
-                            child: const Text('Memo',
+                            child: Text('Memo',
                                 style: TextStyle(
+                                  color: textColor(),
                                   fontSize: 20,
                                 ))),
                         Container(
                           alignment: FractionalOffset.bottomRight,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Theme.of(context).colorScheme.primary
-                                  : const Color.fromARGB(255, 241, 148, 58),
+                              backgroundColor: Theme.of(context).canvasColor,
                             ),
                             onPressed: () {},
                             child: const Text('Comanda'),
@@ -180,39 +160,3 @@ class HomePage extends MainPage {
     );
   }
 }
-
-class DefineColors {
-  MaterialColor lightPrimaryColor = const MaterialColor(
-    0xFF18A640,
-    <int, Color>{
-      50: Color(0xFFF2F9F2),
-      100: Color(0xFFDBF1DB),
-      200: Color(0xFFB8E8B8),
-      300: Color(0xFF94DF94),
-      400: Color(0xFF76D876),
-      500: Color(0xFF58CF58),
-      600: Color(0xFF50C950),
-      700: Color(0xFF46C146),
-      800: Color(0xFF3CB83C),
-      900: Color(0xFF2B9C2B),
-    },
-  );
-
-  MaterialColor darkPrimaryColor = const MaterialColor(
-    0xFF212121,
-    {
-      50: Color(0xFFECEFF1),
-      100: Color(0xFFCFD8DC),
-      200: Color(0xFFB0BEC5),
-      300: Color(0xFF90A4AE),
-      400: Color(0xFF78909C),
-      500: Color(0xFF607D8B),
-      600: Color(0xFF546E7A),
-      700: Color(0xFF455A64),
-      800: Color(0xFF37474F),
-      900: Color(0xFF263238),
-    },
-  );
-}
-//backgroundColor: Color.fromARGB(255, 47, 47, 47),
-//backgroundColor: const Color.fromARGB(255, 33, 33, 33),

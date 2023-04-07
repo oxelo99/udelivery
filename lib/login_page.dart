@@ -121,13 +121,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: const Center(
                           child: Text(
-                        'Log In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      )),
+                            'Log In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          )),
                     ),
                   ),
                 ),

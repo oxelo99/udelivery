@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:udelivery/login_page.dart';
-import 'package:udelivery/login_page.dart';
 import 'package:udelivery/register_page.dart';
 
 
