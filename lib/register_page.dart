@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:udelivery/login_page.dart';
+import 'package:udelivery/theme_data.dart';
 
 class RegisterPage extends StatefulWidget {
-  final VoidCallback showLoginPage;
-
-  const RegisterPage({Key? key, required this.showLoginPage}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -45,20 +45,39 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       return false;
     } else {
-      return true;
+      if (passwordCheck() == true) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
   Future signUp() async {
-    if (passwordCheck() == true && dataCheck() == true) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailcontroller.text.trim(),
-          password: _passwordcontroller.text.trim());
+    if (dataCheck() == true) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: _emailcontroller.text.trim(),
+            password: _passwordcontroller.text.trim());
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'invalid-email') {
+          setState(() {
+            _errorMessage = 'Adresa de mail este invalida!';
+          });
+        } else if (e.code == 'weak-password') {
+          setState(() {
+            _errorMessage='Parola trebuie sa aibe cel putin 6 caractere!';
+          });}else
+          {
+          //add user data
+          addUserDetails(
+              _numecontroller.text.trim(),
+              _prenumecontroller.text.trim(),
+              _phonecontroller.text.trim(),
+              _emailcontroller.text.trim());
+        }
+      }
     }
-
-    //add user data
-    addUserDetails(_numecontroller.text.trim(), _prenumecontroller.text.trim(),
-        _phonecontroller.text.trim(), _emailcontroller.text.trim());
   }
 
   Future addUserDetails(
@@ -74,172 +93,134 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: Material(
-        color: Colors.black38,
-        child: SafeArea(
+      home: Scaffold(
+        body: SafeArea(
           child: SingleChildScrollView(
+            reverse: true,
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              //mainAxisAlignment: MainAxisAlignment.center,
-
+              //Coloana principala care este un vector de widgeturi si contine tot ecranul
               children: [
                 const SizedBox(
+                  //formeaza un mic spatiu pe orizontala intre widgeturi
                   height: 50,
                 ),
-                const Text('Creare Cont Nou',
+                Text('Creare Cont Nou', //titlu
                     style: TextStyle(
-                      color: Colors.white,
+                      color: MyTheme.textColor(context),
                       fontSize: 25,
                     )),
                 const SizedBox(
                   height: 50,
                 ),
-                const Text('Completeaza datele de mai jos:',
+                Text('Completeaza datele de mai jos:', //info
                     style: TextStyle(
-                      color: Colors.white,
+                      color: MyTheme.textColor(context),
                       fontSize: 15,
                     )),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
+                  //camp nume
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: _numecontroller,
-                        decoration: const InputDecoration(
-                          hintText: 'Nume',
-                        ),
-                      )),
+                  //se creaza o margine interioara astfel incat field-ul sa dea impresia
+                  child: TextField(
+                    //unei margini si sa nu ocupe toata latimea coloanei(ecranului)
+                    controller: _numecontroller,
+                    decoration: const InputDecoration(
+                      hintText: 'Nume',
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: TextField(
+                      //camp prenume
+                      controller: _prenumecontroller,
+                      decoration: const InputDecoration(
+                        hintText: 'Prenume',
                       ),
-                      child: TextField(
-                        controller: _prenumecontroller,
-                        decoration: const InputDecoration(
-                          hintText: 'Prenume',
-                        ),
-                      )),
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  //camp numar tel
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: TextField(
+                    controller: _phonecontroller,
+                    decoration: const InputDecoration(
+                      hintText: 'Numar de telefon',
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
+                  //camp email
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: _phonecontroller,
-                        decoration: const InputDecoration(
-                          hintText: 'Numar de telefon',
-                        ),
-                      )),
+                  child: TextField(
+                    controller: _emailcontroller,
+                    decoration: const InputDecoration(
+                      hintText: 'Email',
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
+                  //camp parola
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: _emailcontroller,
-                        decoration: const InputDecoration(
-                          hintText: 'Email',
-                        ),
-                      )),
+                  child: TextField(
+                    controller: _passwordcontroller,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Parola',
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
+                  //camp confirmare parola
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: _passwordcontroller,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Parola',
-                        ),
-                      )),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: _confirmpasswordcontroller,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Repeta Parola',
-                        ),
-                      )),
+                  child: TextField(
+                    controller: _confirmpasswordcontroller,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Repeta Parola',
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  _errorMessage,
-                  style: const TextStyle(color: Colors.white),
+                  //furnizeaza utilizatorului posibilele erori pe care le
+                  _errorMessage, //putea produce la completarea informatiilor
+                  style: TextStyle(color: MyTheme.textColor(context)),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Padding(
+                  //Buton inregistrare
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
                     onTap: signUp,
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: MyTheme.buttonColor(context),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Center(
@@ -256,10 +237,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 5),
                 GestureDetector(
-                  onTap: widget.showLoginPage,
-                  child: const Text('Ai deja cont? Conecteaza-te acum',
-                      style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyLogin(),
+                        ));
+                  },
+                  child: Text('Ai deja cont? Conecteaza-te acum',
+                      style: TextStyle(color: MyTheme.textColor(context))),
                 ),
+                const SizedBox(height: 30),
+                Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom))
               ],
             ),
           ),

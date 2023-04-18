@@ -25,12 +25,13 @@ class HomePage extends StatelessWidget {
   @override
   build(context) {
     Color textColor() {
-      if (Theme.of(context).brightness == Brightness.dark) {
+      if (MediaQuery.of(context).platformBrightness == Brightness.light) {
         return Colors.black;
       } else {
         return Colors.white;
       }
     }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +45,6 @@ class HomePage extends StatelessWidget {
               icon: logout)
         ],
       ),
-      //backgroundColor: MyTheme.lightPrimaryColor.,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
