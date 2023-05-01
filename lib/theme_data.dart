@@ -66,36 +66,4 @@ class MyTheme {
                 borderSide: BorderSide(width: 1, color: Color.fromARGB(255, 241, 148, 58)),
                 borderRadius: BorderRadius.all(Radius.circular(25.0)))));
   }
-
-  static const MaterialColor lightPrimaryColor = MaterialColor(
-    0xFF18A640,
-    <int, Color>{
-      50: Color(0xFFF2F9F2),
-      100: Color(0xFFDBF1DB),
-      200: Color(0xFFB8E8B8),
-      300: Color(0xFF94DF94),
-      400: Color(0xFF76D876),
-      500: Color(0xFF58CF58),
-      600: Color(0xFF50C950),
-      700: Color(0xFF46C146),
-      800: Color(0xFF3CB83C),
-      900: Color(0xFF2B9C2B),
-    },
-  );
-
-  static const MaterialColor darkPrimaryColor = MaterialColor(
-    0xFF212121,
-    {
-      50: Color(0xFFECEFF1),
-      100: Color(0xFFCFD8DC),
-      200: Color(0xFFB0BEC5),
-      300: Color(0xFF90A4AE),
-      400: Color(0xFF78909C),
-      500: Color(0xFF607D8B),
-      600: Color(0xFF546E7A),
-      700: Color(0xFF455A64),
-      800: Color(0xFF37474F),
-      900: Color(0xFF263238),
-    },
-  );
 }

@@ -3,31 +3,31 @@ import 'package:flutter/material.dart';
 import 'productWidget.dart';
 import 'product.dart';
 
-class ColinaMenu extends StatefulWidget {
-  const ColinaMenu({Key? key}) : super(key: key);
+class MemoMenu extends StatefulWidget {
+  const MemoMenu({Key? key}) : super(key: key);
 
   @override
-  State<ColinaMenu> createState() => _ColinaMenuState();
+  State<MemoMenu> createState() => _MemoMenuState();
 }
 
-class _ColinaMenuState extends State<ColinaMenu> {
+class _MemoMenuState extends State<MemoMenu> {
   Stream<List<Product>> streamProducts() {
     return FirebaseFirestore.instance
-        .collection('meniuColina')
+        .collection('meniuMemo')
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((doc) => Product(
-                  id: doc.id,
-                  name: doc['name'],
-                  price: doc['price'],
-                  active: doc['active'],
-                ))
-            .toList());
+        .map((doc) => Product(
+      id: doc.id,
+      name: doc['name'],
+      price: doc['price'],
+      active: doc['active'],
+    ))
+        .toList());
   }
 
   Future<List<String>> getDocIds() async {
     final snapshot =
-        await FirebaseFirestore.instance.collection('meniuColina').get();
+    await FirebaseFirestore.instance.collection('meniuMemo').get();
     final docIds = snapshot.docs.map((doc) => doc.id).toList();
     return docIds;
   }

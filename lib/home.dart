@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'MemoMenu.dart';
 import 'colina_menu.dart';
 import 'theme_data.dart';
 
@@ -134,7 +135,13 @@ class HomePage extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: MyTheme.buttonColor(context),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const MemoMenu()));
+                            },
                             child: const Text('Comanda'),
                             // color: Color.fromARGB(1, 1, 1, 1),
                           ),

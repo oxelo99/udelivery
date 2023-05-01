@@ -18,6 +18,7 @@ class _widgetProductState extends State<widgetProduct> {
   var qty = ['1', '2', '3', '4'];
   late String _selectedValue=qty[1];
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),

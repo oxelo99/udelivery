@@ -72,6 +72,7 @@ class _forgotPasswordPageState extends State<forgotPasswordPage> {
                 controller: _emailcontroller,
                 decoration: const InputDecoration(
                   labelText: 'Email',
+
                 ),
               ),
             ),
