@@ -24,15 +24,6 @@ class HomePage extends StatelessWidget {
 
   @override
   build(context) {
-    Color textColor() {
-      if (MediaQuery.of(context).platformBrightness == Brightness.light) {
-        return Colors.black;
-      } else {
-        return Colors.white;
-      }
-    }
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Delivery'),
@@ -79,13 +70,13 @@ class HomePage extends StatelessWidget {
                             child: Text('Colina',
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: textColor(),
+                                  color: MyTheme.textColor(context),
                                 ))),
                         Container(
                           alignment: FractionalOffset.bottomRight,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).canvasColor,
+                              backgroundColor: MyTheme.buttonColor(context),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -134,14 +125,14 @@ class HomePage extends StatelessWidget {
                             alignment: FractionalOffset.centerLeft,
                             child: Text('Memo',
                                 style: TextStyle(
-                                  color: textColor(),
+                                  color: MyTheme.textColor(context),
                                   fontSize: 20,
                                 ))),
                         Container(
                           alignment: FractionalOffset.bottomRight,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).canvasColor,
+                              backgroundColor: MyTheme.buttonColor(context),
                             ),
                             onPressed: () {},
                             child: const Text('Comanda'),

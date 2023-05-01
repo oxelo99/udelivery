@@ -131,7 +131,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     //unei margini si sa nu ocupe toata latimea coloanei(ecranului)
                     controller: _numecontroller,
                     decoration: const InputDecoration(
-                      hintText: 'Nume',
+                      labelText: 'Nume',
+                    ),
+                    style: TextStyle(
+                      color: MyTheme.textColor(context),
                     ),
                   ),
                 ),
@@ -144,7 +147,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       //camp prenume
                       controller: _prenumecontroller,
                       decoration: const InputDecoration(
-                        hintText: 'Prenume',
+                        labelText: 'Prenume',
+                      ),
+                      style: TextStyle(
+                        color: MyTheme.textColor(context),
                       ),
                     )),
                 const SizedBox(
@@ -156,7 +162,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: TextField(
                     controller: _phonecontroller,
                     decoration: const InputDecoration(
-                      hintText: 'Numar de telefon',
+                      labelText: 'Numar de telefon',
+                    ),
+                    style: TextStyle(
+                      color: MyTheme.textColor(context),
                     ),
                   ),
                 ),
@@ -169,7 +178,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: TextField(
                     controller: _emailcontroller,
                     decoration: const InputDecoration(
-                      hintText: 'Email',
+                      labelText: 'Email',
+                    ),
+                    style: TextStyle(
+                      color: MyTheme.textColor(context),
                     ),
                   ),
                 ),
@@ -183,7 +195,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _passwordcontroller,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      hintText: 'Parola',
+                      labelText: 'Parola',
+                    ),
+                    style: TextStyle(
+                      color: MyTheme.textColor(context),
                     ),
                   ),
                 ),
@@ -197,7 +212,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _confirmpasswordcontroller,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      hintText: 'Repeta Parola',
+                      labelText: 'Repeta Parola',
+                    ),
+                    style: TextStyle(
+                      color: MyTheme.textColor(context),
                     ),
                   ),
                 ),

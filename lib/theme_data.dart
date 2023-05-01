@@ -32,13 +32,15 @@ class MyTheme {
         textTheme: GoogleFonts.kanitTextTheme(),
         hintColor: Colors.white,
         inputDecorationTheme: const InputDecorationTheme(
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             hintStyle: TextStyle(color: Colors.black),
             filled: true,
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(25.0))
-            )));
+                borderSide: BorderSide(width: 1, color: Colors.grey),
+                borderRadius: BorderRadius.all(Radius.circular(25.0))),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Color.fromARGB(255, 24, 166, 64)),
+                borderRadius: BorderRadius.all(Radius.circular(25.0)))));
   }
 
   static ThemeData get darkTheme {
@@ -53,14 +55,16 @@ class MyTheme {
         textTheme: GoogleFonts.kanitTextTheme(),
         hintColor: Colors.white,
         inputDecorationTheme: const InputDecorationTheme(
-            labelStyle: TextStyle(color: Colors.black),
+            labelStyle: TextStyle(color: Colors.white),
             hintStyle: TextStyle(color: Colors.white),
             //fillColor: Colors.white,
             //filled: false,
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(25.0))
-            )));
+                borderSide: BorderSide(width: 1, color: Colors.grey),
+                borderRadius: BorderRadius.all(Radius.circular(25.0))),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Color.fromARGB(255, 241, 148, 58)),
+                borderRadius: BorderRadius.all(Radius.circular(25.0)))));
   }
 
   static const MaterialColor lightPrimaryColor = MaterialColor(
