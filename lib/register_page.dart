@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _prenumecontroller = TextEditingController();
   final _phonecontroller = TextEditingController();
   String _errorMessage = '';
-
+  String uid='';
   //Verificare date introduse de utilizator
   bool passwordCheck() {
     if (_passwordcontroller.text.trim() ==
@@ -59,34 +59,38 @@ class _RegisterPageState extends State<RegisterPage> {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: _emailcontroller.text.trim(),
             password: _passwordcontroller.text.trim());
+        uid = FirebaseAuth.instance.currentUser!.uid;
+        await addUserDetails(
+          _numecontroller.text.trim(),
+          _prenumecontroller.text.trim(),
+          _phonecontroller.text.trim(),
+          _emailcontroller.text.trim(),
+          uid,
+        );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-email') {
           setState(() {
             _errorMessage = 'Adresa de mail este invalida!';
           });
-        } else if (e.code == 'weak-password') {
+        } else if (e.code == 'email-already-in-use') {
+          setState(() {
+            _errorMessage='Exista un cont cu aceasta adresa de email!';
+          });}else if (e.code == 'weak-password') {
           setState(() {
             _errorMessage='Parola trebuie sa aibe cel putin 6 caractere!';
-          });}else
-          {
-          //add user data
-          addUserDetails(
-              _numecontroller.text.trim(),
-              _prenumecontroller.text.trim(),
-              _phonecontroller.text.trim(),
-              _emailcontroller.text.trim());
-        }
+          });}
       }
     }
   }
 
   Future addUserDetails(
-      String nume, String prenume, String phone, String email) async {
+      String nume, String prenume, String phone, String email, String uid) async {
     await FirebaseFirestore.instance.collection('users').add({
       'Nume': nume,
       'Prenume': prenume,
       'Phone': phone,
       'Email': email,
+      'Uid': uid,
     });
   }
 
@@ -259,7 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyLogin(),
+                          builder: (context) => const MyLogin(),
                         ));
                   },
                   child: Text('Ai deja cont? Conecteaza-te acum',

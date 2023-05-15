@@ -1,12 +1,24 @@
+
 class Product {
-  late String name;
-  late String price;
-  late bool active;
-  late String id;
+  final String name;
+  final String price;
+  final bool active;
+  final String id;
+  int qty=1;
 
   Product({
+    required this.id,
     required this.name,
     required this.price,
-    required this.active, required String id,
+    required this.active,
   });
+
+  Map<String, dynamic> toMap(){
+    return{
+      'id': id,
+      'name': name,
+      'price': price,
+      'qty': qty,
+    };
+  }
 }

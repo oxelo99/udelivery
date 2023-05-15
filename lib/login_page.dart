@@ -5,6 +5,8 @@ import 'package:udelivery/theme_data.dart';
 import 'forgot_pw_page.dart';
 
 class MyLogin extends StatelessWidget {
+  const MyLogin({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,8 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailcontroller.text.trim(),
-          password: _passwordcontroller.text.trim()
-      );
+          password: _passwordcontroller.text.trim());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setState(() {
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return const forgotPasswordPage();
+                          return const ForgotPwPage();
                         }));
                       },
                     ),

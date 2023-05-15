@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'theme_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class forgotPasswordPage extends StatefulWidget {
-  const forgotPasswordPage({Key? key}) : super(key: key);
+class ForgotPwPage extends StatefulWidget {
+  const ForgotPwPage({Key? key}) : super(key: key);
 
   @override
-  State<forgotPasswordPage> createState() => _forgotPasswordPageState();
+  State<ForgotPwPage> createState() => _ForgotPwPageState();
 }
 
-class _forgotPasswordPageState extends State<forgotPasswordPage> {
+class _ForgotPwPageState extends State<ForgotPwPage> {
   final _emailcontroller = TextEditingController();
   String _errorMessage = '';
 
@@ -72,8 +72,8 @@ class _forgotPasswordPageState extends State<forgotPasswordPage> {
                 controller: _emailcontroller,
                 decoration: const InputDecoration(
                   labelText: 'Email',
-
                 ),
+                style: TextStyle(color: MyTheme.textColor(context)),
               ),
             ),
             const SizedBox(

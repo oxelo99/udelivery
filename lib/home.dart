@@ -1,17 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'MemoMenu.dart';
+import 'package:udelivery/user.dart';
+import 'memo_menu.dart';
 import 'colina_menu.dart';
 import 'theme_data.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final MyUser currentUser;
+  const MyApp({super.key, required this.currentUser,});
 
   @override
   build(context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: HomePage(currentUser: currentUser,),
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
     );
@@ -19,7 +21,9 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final MyUser currentUser;
+
+  const HomePage({super.key, required this.currentUser});
 
   final Icon logout = const Icon(Icons.logout);
 
@@ -84,7 +88,7 @@ class HomePage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const ColinaMenu()));
+                                          ColinaMenu(currentUser: currentUser,)));
                             },
                             child: const Text('Comanda'),
                           ),
@@ -140,7 +144,7 @@ class HomePage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const MemoMenu()));
+                                       MemoMenu(currentUser: currentUser,)));
                             },
                             child: const Text('Comanda'),
                             // color: Color.fromARGB(1, 1, 1, 1),

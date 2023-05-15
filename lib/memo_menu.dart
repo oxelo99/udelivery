@@ -5,19 +5,19 @@ import 'package:udelivery/user.dart';
 import 'product_widget.dart';
 import 'product.dart';
 
-class ColinaMenu extends StatefulWidget {
-  final Cart colinaCart = Cart();
+class MemoMenu extends StatefulWidget {
+  final Cart memoCart = Cart();
   final MyUser currentUser;
-  ColinaMenu({required this.currentUser, super.key});
+  MemoMenu({required this.currentUser,super.key,});
 
   @override
-  State<ColinaMenu> createState() => _ColinaMenuState();
+  State<MemoMenu> createState() => _MemoMenuState();
 }
 
-class _ColinaMenuState extends State<ColinaMenu> {
+class _MemoMenuState extends State<MemoMenu> {
   Stream<List<Product>> streamProducts() {
     return FirebaseFirestore.instance
-        .collection('meniuColina')
+        .collection('meniuMemo')
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((doc) => Product(
@@ -31,7 +31,7 @@ class _ColinaMenuState extends State<ColinaMenu> {
 
   Future<List<String>> getDocIds() async {
     final snapshot =
-        await FirebaseFirestore.instance.collection('meniuColina').get();
+        await FirebaseFirestore.instance.collection('meniuMemo').get();
     final docIds = snapshot.docs.map((doc) => doc.id).toList();
     return docIds;
   }
@@ -40,7 +40,7 @@ class _ColinaMenuState extends State<ColinaMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meniu Colina'),
+        title: const Text('Meniu Memo'),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -49,7 +49,11 @@ class _ColinaMenuState extends State<ColinaMenu> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CartPage(myCart: widget.colinaCart, complex: 'Colina', currentUser: widget.currentUser,)));
+                        builder: (context) => CartPage(
+                              myCart: widget.memoCart,
+                              complex: 'Memorandului',
+                              currentUser: widget.currentUser,
+                            )));
               },
               child: const Icon(
                 Icons.shopping_basket,
@@ -83,7 +87,8 @@ class _ColinaMenuState extends State<ColinaMenu> {
                 itemBuilder: (BuildContext context, int index) {
                   final product = productList[index];
                   if (productList[index].active == true) {
-                    return WidgetProduct(product: product, productCart: widget.colinaCart,);
+                    return WidgetProduct(
+                        product: product, productCart: widget.memoCart);
                   }
                 },
               ),
