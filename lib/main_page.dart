@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:udelivery/user.dart';
-import 'memo_menu.dart';
-import 'colina_menu.dart';
+import 'memo_menu_page.dart';
+import 'colina_menu_page.dart';
+import 'order_class.dart';
 import 'theme_data.dart';
 
 class MyApp extends StatelessWidget {
-  final MyUser currentUser;
-  const MyApp({super.key, required this.currentUser,});
+  MyOrder currentOrder;
+  MyApp({super.key, required this.currentOrder,});
 
   @override
   build(context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(currentUser: currentUser,),
+      home: HomePage(currentOrder: currentOrder,),
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
     );
@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  final MyUser currentUser;
+  MyOrder currentOrder;
 
-  const HomePage({super.key, required this.currentUser});
+  HomePage({super.key, required this.currentOrder});
 
   final Icon logout = const Icon(Icons.logout);
 
@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ColinaMenu(currentUser: currentUser,)));
+                                          ColinaMenu(currentOrder: currentOrder,)));
                             },
                             child: const Text('Comanda'),
                           ),
@@ -144,7 +144,7 @@ class HomePage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                       MemoMenu(currentUser: currentUser,)));
+                                       MemoMenu(currentOrder: currentOrder,)));
                             },
                             child: const Text('Comanda'),
                             // color: Color.fromARGB(1, 1, 1, 1),

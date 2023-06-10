@@ -16,6 +16,7 @@ class MyUser {
       'First Name': firstName,
       'Last Name': lastName,
       'Phone Number': phoneNumber,
+      'Email Address': emailAddress,
     };
   }
   Future<void> getUserData() async {

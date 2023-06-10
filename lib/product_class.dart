@@ -1,4 +1,3 @@
-
 class Product {
   final String name;
   final String price;

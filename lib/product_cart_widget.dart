@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:udelivery/product.dart';
-import 'theme_data.dart';
-import 'cart_page.dart';
+import 'package:udelivery/product_class.dart';
+import 'package:udelivery/theme_data.dart';
+import 'cart_class.dart';
 
-class WidgetProduct extends StatefulWidget {
+class ProductCartWidget extends StatefulWidget {
   final Product product;
   final Cart productCart;
+  final int index;
 
-  const WidgetProduct(
-      {Key? key, required this.product, required this.productCart})
+  const ProductCartWidget(
+      {Key? key,
+        required this.product,
+        required this.productCart,
+        required this.index})
       : super(key: key);
 
   @override
-  State<WidgetProduct> createState() => _WidgetProductState();
+  State<ProductCartWidget> createState() => _ProductCartWidgetState();
 }
 
-class _WidgetProductState extends State<WidgetProduct> {
-  var qty = ['1', '2', '3', '4'];
+class _ProductCartWidgetState extends State<ProductCartWidget> {
+  List<int> qty = [1, 2, 3, 4];
 
   @override
   Widget build(BuildContext context) {
@@ -49,31 +53,34 @@ class _WidgetProductState extends State<WidgetProduct> {
                     ),
                   ),
                 ),
-                /*Expanded(
+                Expanded(
                     flex: 1,
-                    child:  DropdownButton(
-                      value: _selectedValue,
-                      items: qty.map(
-                              (e){
-                            return DropdownMenuItem(value: e, child: Text(e, style: TextStyle(color: MyTheme.textColor(context)),),);
-                          }
-                      ).toList(),
-                      onChanged: (val){
+                    child: DropdownButton(
+                      value: widget.productCart.cartList[widget.index].qty,
+                      items: qty.map((e) {
+                        return DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            '$e',
+                            style: TextStyle(color: MyTheme.textColor(context)),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
                         setState(() {
-                          _selectedValue = val as String;
-
+                          widget.productCart.cartList[widget.index].qty =
+                              val ?? 0;
                         });
                       },
-                    )
-                ),*/
+                    )),
                 Expanded(
                     flex: 1,
                     child: IconButton(
                         onPressed: () {
-                          widget.productCart.addProduct(widget.product);
+                          widget.productCart.removeProduct(widget.product);
                         },
                         icon: Icon(
-                          Icons.add_circle_rounded,
+                          Icons.remove_circle_rounded,
                           color: MyTheme.buttonColor(context),
                         ))),
               ],

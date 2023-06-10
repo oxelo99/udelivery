@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:udelivery/home.dart';
+import 'package:udelivery/main_page.dart';
 import 'package:udelivery/login_page.dart';
-import 'user.dart';
+import 'package:udelivery/user_class.dart';
+import 'order_class.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  MyOrder currentOrder = MyOrder.late();
+  AuthPage({Key? key}) : super(key: key);
 
   Future<MyUser> _getUserData(String uid) async {
     MyUser currentUser = MyUser.uid(uid: uid);
@@ -27,9 +29,8 @@ class AuthPage extends StatelessWidget {
               if (userSnapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (userSnapshot.hasData) {
-                return MyApp(
-                  currentUser: userSnapshot.data!,
-                );
+                currentOrder.currentUser=userSnapshot.data!;
+                return MyApp(currentOrder: currentOrder);
               } else {
                 return const MaterialApp(
                   home: AlertDialog(

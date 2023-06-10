@@ -1,39 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:udelivery/cart_page.dart';
-import 'package:udelivery/user.dart';
-import 'product_widget.dart';
-import 'product.dart';
+import 'order_class.dart';
+import 'product_menu_widget.dart';
+import 'product_class.dart';
 
 class ColinaMenu extends StatefulWidget {
-  final Cart colinaCart = Cart();
-  final MyUser currentUser;
-  ColinaMenu({required this.currentUser, super.key});
+  MyOrder currentOrder;
+
+  ColinaMenu({required this.currentOrder, super.key});
 
   @override
   State<ColinaMenu> createState() => _ColinaMenuState();
 }
 
 class _ColinaMenuState extends State<ColinaMenu> {
+
   Stream<List<Product>> streamProducts() {
     return FirebaseFirestore.instance
         .collection('meniuColina')
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((doc) => Product(
-                  id: doc.id,
-                  name: doc['name'],
-                  price: doc['price'],
-                  active: doc['active'],
-                ))
+            .map(
+              (doc) => Product(
+                id: doc.id,
+                name: doc['name'],
+                price: doc['price'],
+                active: doc['active'],
+              ),
+            )
             .toList());
-  }
-
-  Future<List<String>> getDocIds() async {
-    final snapshot =
-        await FirebaseFirestore.instance.collection('meniuColina').get();
-    final docIds = snapshot.docs.map((doc) => doc.id).toList();
-    return docIds;
   }
 
   @override
@@ -49,7 +45,9 @@ class _ColinaMenuState extends State<ColinaMenu> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CartPage(myCart: widget.colinaCart, complex: 'Colina', currentUser: widget.currentUser,)));
+                        builder: (context) => CartPage(
+                              currentOrder: widget.currentOrder,
+                            )));
               },
               child: const Icon(
                 Icons.shopping_basket,
@@ -75,16 +73,20 @@ class _ColinaMenuState extends State<ColinaMenu> {
             }
 
             final productList = snapshot.data!;
-
+            final activeProducts =
+                productList.where((product) => product.active == true).toList();
+            widget.currentOrder.complex='Colina';
+            widget.currentOrder.address.complex = 'Colina';
             return Container(
               height: MediaQuery.of(context).size.height,
               child: ListView.builder(
-                itemCount: productList.length,
+                itemCount: activeProducts.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final product = productList[index];
-                  if (productList[index].active == true) {
-                    return WidgetProduct(product: product, productCart: widget.colinaCart,);
-                  }
+                  final product = activeProducts[index];
+                  return ProductWidget(
+                    product: product,
+                    productCart: widget.currentOrder.myCart,
+                  );
                 },
               ),
             );

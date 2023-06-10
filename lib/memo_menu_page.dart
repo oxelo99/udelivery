@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:udelivery/cart_page.dart';
-import 'package:udelivery/user.dart';
-import 'product_widget.dart';
-import 'product.dart';
+import 'order_class.dart';
+import 'product_menu_widget.dart';
+import 'product_class.dart';
 
 class MemoMenu extends StatefulWidget {
-  final Cart memoCart = Cart();
-  final MyUser currentUser;
-  MemoMenu({required this.currentUser,super.key,});
+  MyOrder currentOrder;
+  MemoMenu({
+    required this.currentOrder,
+    super.key,
+  });
 
   @override
   State<MemoMenu> createState() => _MemoMenuState();
@@ -29,13 +31,6 @@ class _MemoMenuState extends State<MemoMenu> {
             .toList());
   }
 
-  Future<List<String>> getDocIds() async {
-    final snapshot =
-        await FirebaseFirestore.instance.collection('meniuMemo').get();
-    final docIds = snapshot.docs.map((doc) => doc.id).toList();
-    return docIds;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,11 +44,7 @@ class _MemoMenuState extends State<MemoMenu> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CartPage(
-                              myCart: widget.memoCart,
-                              complex: 'Memorandului',
-                              currentUser: widget.currentUser,
-                            )));
+                        builder: (context) => CartPage(currentOrder: widget.currentOrder)));
               },
               child: const Icon(
                 Icons.shopping_basket,
@@ -79,17 +70,20 @@ class _MemoMenuState extends State<MemoMenu> {
             }
 
             final productList = snapshot.data!;
-
+            final activeProducts =
+            productList.where((product) => product.active == true).toList();
+            widget.currentOrder.complex='Memo';
+            widget.currentOrder.address.complex ='Memo';
             return Container(
               height: MediaQuery.of(context).size.height,
               child: ListView.builder(
-                itemCount: productList.length,
+                itemCount: activeProducts.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final product = productList[index];
-                  if (productList[index].active == true) {
-                    return WidgetProduct(
-                        product: product, productCart: widget.memoCart);
-                  }
+                  final product = activeProducts[index];
+                  return ProductWidget(
+                    product: product,
+                    productCart: widget.currentOrder.myCart,
+                  );
                 },
               ),
             );
